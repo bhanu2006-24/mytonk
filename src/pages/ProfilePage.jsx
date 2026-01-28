@@ -6,18 +6,11 @@ import { Link } from 'react-router-dom';
 import { User, Mail, Phone, MapPin, Edit3, Settings, LogOut, Package, Heart, ChevronRight, Bell, Shield, CreditCard, HelpCircle } from 'lucide-react';
 
 const ProfilePage = () => {
-    const { t, orders, logout } = useApp();
+    const { t, orders, logout, user } = useApp();
     const [activeTab, setActiveTab] = useState('profile');
 
-    // Mock User Data
-    const user = {
-        name: 'ViJaY Saini',
-        email: 'vijaysaini@example.com',
-        phone: '+91 98765 43210',
-        location: 'Tonk, Rajasthan',
-        joinDate: 'Jan 2026',
-        avatar: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&auto=format&fit=crop&q=60'
-    };
+    // Default cleanup if user is null (shouldn't happen if guarded)
+    if (!user) return null; // or redirect
 
     const tabs = [
         { id: 'profile', label: { en: 'My Profile', hi: 'मेरी प्रोफ़ाइल' }, icon: User, color: 'text-blue-600 bg-blue-50' },
@@ -37,7 +30,7 @@ const ProfilePage = () => {
                         <div className="flex flex-col md:flex-row items-start md:items-end gap-6">
                             <div className="relative -mt-12 shrink-0">
                                 <img 
-                                    src={user.avatar} 
+                                    src={user.avatar || 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&auto=format&fit=crop&q=60'} 
                                     alt={user.name} 
                                     className="w-32 h-32 rounded-full border-4 border-white object-cover shadow-lg bg-white"
                                 />
@@ -49,7 +42,7 @@ const ProfilePage = () => {
                                  <h1 className="text-3xl font-bold text-gray-900">{user.name}</h1>
                                  <p className="text-gray-500 font-medium flex items-center gap-2 mt-1">
                                     <MapPin size={16} />
-                                    {user.location} • Member since {user.joinDate}
+                                    {user.location || 'Tonk, Rajasthan'} • Member since {user.joinDate || 'Jan 2026'}
                                  </p>
                             </div>
                             <div className="flex gap-3 mb-2 w-full md:w-auto">

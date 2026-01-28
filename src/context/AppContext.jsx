@@ -38,6 +38,11 @@ export const AppProvider = ({ children }) => {
       setIsAdmin(false);
   };
 
+  const updateUser = (userData) => {
+      setUser(prev => ({ ...prev, ...userData }));
+      addToast('Profile updated successfully!', 'success');
+  };
+
   // Orders
   const [orders, setOrders] = useState([]);
 
@@ -118,6 +123,7 @@ export const AppProvider = ({ children }) => {
       user,
       login,
       logout,
+      updateUser,
       t
     }}>
       {children}

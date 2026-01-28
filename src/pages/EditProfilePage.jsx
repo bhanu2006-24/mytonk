@@ -6,17 +6,16 @@ import { ArrowLeft, Save, Camera, User, Phone, Mail, MapPin } from 'lucide-react
 import { Link, useNavigate } from 'react-router-dom';
 
 const EditProfilePage = () => {
-    const { t } = useApp();
+    const { t, user, updateUser } = useApp();
     const navigate = useNavigate();
 
-    // Mock initial user data - in a real app, this would come from context/auth
+    // Initialize with user data or defaults
     const [formData, setFormData] = useState({
-        name: 'ViJaY',
-        phone: '+91 98765 43210',
-        email: 'vijay@example.com',
-        location: 'Civil Lines, Tonk',
-        bio: 'Love exploring local markets and food.',
-        language: 'Hindi'
+        name: user?.name || '',
+        phone: user?.phone || '',
+        email: user?.email || '',
+        location: user?.location || '',
+        bio: user?.bio || '',
     });
 
     const handleChange = (e) => {
@@ -25,10 +24,7 @@ const EditProfilePage = () => {
 
     const handleSave = (e) => {
         e.preventDefault();
-        // Here you would typically make an API call to update the profile
-        console.log('Profile Updated:', formData);
-        // Show success message (using alert for now, could be Toast)
-        alert('Profile updated successfully!');
+        updateUser(formData);
         navigate('/profile');
     };
 
