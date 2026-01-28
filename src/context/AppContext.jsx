@@ -19,8 +19,24 @@ export const AppProvider = ({ children }) => {
   // Cart
   const [cart, setCart] = useState([]);
   
-  // Admin State (Mock)
-  const [isAdmin, setIsAdmin] = useState(false);
+  // Auth State
+  const [user, setUser] = useState(null); // { name, role: 'customer' | 'seller' | 'admin' }
+  const [isAdmin, setIsAdmin] = useState(false); // Legacy support
+
+  const login = (role = 'customer') => {
+      setUser({
+          name: role === 'admin' ? 'Admin User' : role === 'seller' ? 'Partner User' : 'Vijay Saini',
+          email: 'user@example.com',
+          role: role
+      });
+      if (role === 'admin') setIsAdmin(true);
+      else setIsAdmin(false);
+  };
+
+  const logout = () => {
+      setUser(null);
+      setIsAdmin(false);
+  };
 
   // Orders
   const [orders, setOrders] = useState([]);
@@ -99,6 +115,9 @@ export const AppProvider = ({ children }) => {
       placeOrder,
       isAdmin,
       setIsAdmin,
+      user,
+      login,
+      logout,
       t
     }}>
       {children}

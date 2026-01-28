@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import { useApp } from '../context/AppContext';
 import { motion } from 'framer-motion';
-import { Trash2, ShoppingBag } from 'lucide-react';
+import { Trash2, ShoppingBag, MapPin } from 'lucide-react';
 
 const CartPage = () => {
     const { cart, removeFromCart, placeOrder, t } = useApp();
@@ -60,33 +60,61 @@ const CartPage = () => {
                         <motion.div 
                              initial={{ opacity: 0, y: 20 }}
                              animate={{ opacity: 1, y: 0 }}
-                             className="w-full lg:w-80 h-fit bg-surface/50 p-6 rounded-2xl border border-white/10 backdrop-blur-md"
+                             className="w-full lg:w-80 space-y-6"
                         >
-                            <h3 className="text-lg font-bold text-white mb-4">{t({en: 'Order Summary', hi: 'आर्डर सारांश'})}</h3>
-                            <div className="space-y-2 mb-6 text-sm text-gray-300">
-                                <div className="flex justify-between">
-                                    <span>Subtotal</span>
-                                    <span>₹{total}</span>
+                            {/* Order Summary */}
+                            <div className="bg-surface/50 p-6 rounded-2xl border border-white/10 backdrop-blur-md">
+                                <h3 className="text-lg font-bold text-white mb-4">{t({en: 'Order Summary', hi: 'आर्डर सारांश'})}</h3>
+                                <div className="space-y-2 mb-6 text-sm text-gray-300">
+                                    <div className="flex justify-between">
+                                        <span>Subtotal</span>
+                                        <span>₹{total}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span>Tax (5%)</span>
+                                        <span>₹{Math.round(total * 0.05)}</span>
+                                    </div>
+                                    <div className="border-t border-white/10 pt-2 flex justify-between font-bold text-white text-base">
+                                        <span>Total</span>
+                                        <span>₹{total + Math.round(total * 0.05)}</span>
+                                    </div>
                                 </div>
-                                <div className="flex justify-between">
-                                    <span>Tax (5%)</span>
-                                    <span>₹{Math.round(total * 0.05)}</span>
-                                </div>
-                                <div className="border-t border-white/10 pt-2 flex justify-between font-bold text-white text-base">
-                                    <span>Total</span>
-                                    <span>₹{total + Math.round(total * 0.05)}</span>
-                                </div>
+                                <button 
+                                    onClick={() => {
+                                        if(confirm(t({en: 'Confirm order placement?', hi: 'आर्डर की पुष्टि करें?'}))) {
+                                            placeOrder();
+                                        }
+                                    }}
+                                    className="w-full py-3 bg-linear-to-r from-primary to-secondary rounded-xl font-bold text-white shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all"
+                                >
+                                    {t({en: 'Checkout', hi: 'चेक आउट'})}
+                                </button>
                             </div>
-                            <button 
-                                onClick={() => {
-                                    if(confirm(t({en: 'Confirm order placement?', hi: 'आर्डर की पुष्टि करें?'}))) {
-                                        placeOrder();
-                                    }
-                                }}
-                                className="w-full py-3 bg-linear-to-r from-primary to-secondary rounded-xl font-bold text-white shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all"
-                            >
-                                {t({en: 'Checkout', hi: 'चेक आउट'})}
-                            </button>
+
+                            {/* Location Map Section */}
+                            <div className="bg-surface/50 p-6 rounded-2xl border border-white/10 backdrop-blur-md">
+                                <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                                     <MapPin size={18} className="text-primary" />
+                                     {t({en: 'Delivery Location', hi: 'वितरण स्थान'})}
+                                </h3>
+                                <div className="h-40 bg-slate-800 rounded-xl relative overflow-hidden group cursor-pointer border border-white/10">
+                                    {/* Mock Map Image */}
+                                    <img 
+                                        src="https://media.istockphoto.com/id/1145625471/vector/abstract-city-map-with-pins.jpg?s=612x612&w=0&k=20&c=L_A5zWn5n6iA-g_Wn2B7R9x_hQ9Q_j_u_x_z_y_x_z"
+                                        alt="Map"
+                                        className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity"
+                                    />
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="bg-primary/90 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-1 backdrop-blur-sm">
+                                            <MapPin size={12} />
+                                            Use Live Location
+                                        </div>
+                                    </div>
+                                </div>
+                                <p className="text-xs text-gray-400 mt-3 text-center">
+                                    {t({en: 'Tap map to Pin your precise location', hi: 'अपना सटीक स्थान पिन करने के लिए मैप पर टैप करें'})}
+                                </p>
+                            </div>
                         </motion.div>
                     )}
                 </div>

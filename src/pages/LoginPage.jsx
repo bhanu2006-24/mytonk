@@ -6,7 +6,7 @@ import { useApp } from '../context/AppContext';
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const { t } = useApp();
+    const { t, login } = useApp();
     const [formData, setFormData] = useState({ email: '', password: '' });
 
     const handleChange = (e) => {
@@ -101,6 +101,30 @@ const LoginPage = () => {
                                 <ArrowRight size={18} />
                             </button>
                         </form>
+
+                        <div className="mt-6 flex flex-col gap-2">
+                             <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest text-center mb-2">Demo Logins (Click to try)</h4>
+                             <div className="flex gap-2 text-xs font-bold">
+                                 <button 
+                                     onClick={() => { login('customer'); navigate('/profile'); }}
+                                     className="flex-1 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
+                                 >
+                                     Customer
+                                 </button>
+                                 <button 
+                                     onClick={() => { login('seller'); navigate('/partner'); }}
+                                     className="flex-1 py-2 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition-colors"
+                                 >
+                                     Seller
+                                 </button>
+                                 <button 
+                                     onClick={() => { login('admin'); navigate('/admin'); }}
+                                     className="flex-1 py-2 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition-colors"
+                                 >
+                                     Admin
+                                 </button>
+                             </div>
+                        </div>
 
                         <div className="mt-8 pt-6 border-t border-slate-100 text-center">
                             <p className="text-slate-500">

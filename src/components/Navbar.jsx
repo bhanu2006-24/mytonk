@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
-    const { toggleLanguage, language, cart, t } = useApp();
+    const { toggleLanguage, language, cart, t, user } = useApp();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
@@ -61,9 +61,15 @@ const Navbar = () => {
                         )}
                     </Link>
                     
-                    <Link to="/profile" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-primary font-bold hover:bg-primary hover:text-white transition-colors border-2 border-slate-200 hover:border-primary">
-                        <User size={20} />
-                    </Link>
+                    {user ? (
+                        <Link to="/profile" className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-primary font-bold hover:bg-primary hover:text-white transition-colors border-2 border-slate-200 hover:border-primary">
+                            <User size={20} />
+                        </Link>
+                    ) : (
+                        <Link to="/login" className="px-5 py-2.5 rounded-full bg-primary text-white font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/30">
+                            {t({en: 'Log In', hi: 'लॉग इन'})}
+                        </Link>
+                    )}
                 </div>
 
                 {/* Mobile Actions (Visible on small screens) */}
@@ -75,9 +81,15 @@ const Navbar = () => {
                         {language === 'en' ? 'HI' : 'EN'}
                     </button>
 
-                    <Link to="/profile" className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-primary border border-slate-200">
-                        <User size={18} />
-                    </Link>
+                    {user ? (
+                        <Link to="/profile" className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-primary border border-slate-200">
+                            <User size={18} />
+                        </Link>
+                    ) : (
+                         <Link to="/login" className="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center border border-primary">
+                            <User size={18} />
+                        </Link>
+                    )}
 
                     <button 
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
