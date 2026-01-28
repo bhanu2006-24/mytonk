@@ -21,7 +21,10 @@ import SellerProfilePage from './pages/SellerProfilePage';
 
 import ServiceDetails from './pages/ServiceDetails';
 import ProductDetails from './pages/ProductDetails';
+import EventDetails from './pages/EventDetails';
+import TransportDetails from './pages/TransportDetails';
 import ProfilePage from './pages/ProfilePage';
+import EditProfilePage from './pages/EditProfilePage';
 import { ToastProvider } from './context/ToastContext';
 
 function App() {
@@ -37,9 +40,12 @@ function App() {
               <Route path="/market" element={<MarketPage />} />
               <Route path="/market/:id" element={<ProductDetails />} />
               <Route path="/events" element={<EventsPage />} />
+              <Route path="/events/:id" element={<EventDetails />} />
               <Route path="/transport" element={<TransportPage />} />
+              <Route path="/transport/:id" element={<TransportDetails />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/profile/edit" element={<EditProfilePage />} />
               <Route path="/support" element={<SupportPage />} />
               {/* Legal & Info */}
               <Route path="/about" element={<AboutPage />} />

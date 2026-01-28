@@ -124,7 +124,7 @@ const Navbar = () => {
                                 </Link>
                             </div>
 
-                            <div className="flex items-center justify-between p-2">
+                            {/* <div className="flex items-center justify-between p-2">
                                 <button onClick={toggleLanguage} className="flex items-center gap-2 font-bold text-gray-600">
                                     <Globe size={18} />
                                     {language === 'en' ? 'Change Language' : 'भाषा बदलें'}
@@ -133,7 +133,7 @@ const Navbar = () => {
                                     <User size={18} />
                                     {t({en: 'Profile', hi: 'प्रोफ़ाइल'})}
                                 </Link>
-                            </div>
+                            </div> */}
                         </div>
                     </motion.div>
                 )}

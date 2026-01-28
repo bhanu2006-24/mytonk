@@ -31,7 +31,7 @@ const HomePage = () => {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.5 + index * 0.1 }}
-                    className={`min-w-[280px] md:min-w-[320px] p-6 rounded-2xl bg-gradient-to-r ${offer.color} text-white shadow-lg snap-start flex items-center justify-between cursor-pointer hover:scale-105 transition-transform`}
+                    className={`min-w-[280px] md:min-w-[320px] p-6 rounded-2xl bg-linear-to-r ${offer.color} text-white shadow-lg snap-start flex items-center justify-between cursor-pointer hover:scale-105 transition-transform`}
                 >
                     <div>
                         <div className="bg-white/20 w-fit px-2 py-1 rounded text-xs font-bold mb-2 flex items-center gap-1">
@@ -94,7 +94,7 @@ const HomePage = () => {
       </section>
 
       {/* Local Market */}
-      <section className="py-16 bg-gradient-to-b from-orange-50 to-white border-y border-orange-100/50">
+      <section className="py-16 bg-linear-to-b from-orange-50 to-white border-y border-orange-100/50">
         <div className="container-padding">
             <div className="flex items-end justify-between mb-8">
                 <div>

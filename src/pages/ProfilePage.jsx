@@ -32,7 +32,7 @@ const ProfilePage = () => {
             <Navbar />
             <div className="container-padding max-w-6xl mx-auto">
                 <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mb-8">
-                    <div className="h-32 bg-gradient-to-r from-primary to-purple-600 relative"></div>
+                    <div className="h-32 bg-linear-to-r from-primary to-purple-600 relative"></div>
                     <div className="px-8 pb-8 relative">
                         <div className="flex flex-col md:flex-row items-start md:items-end gap-6">
                             <div className="relative -mt-12 shrink-0">
@@ -41,9 +41,9 @@ const ProfilePage = () => {
                                     alt={user.name} 
                                     className="w-32 h-32 rounded-full border-4 border-white object-cover shadow-lg bg-white"
                                 />
-                                <button className="absolute bottom-1 right-1 p-2 bg-primary text-white rounded-full shadow-md hover:bg-primary/90 transition-colors">
+                                <Link to="/profile/edit" className="absolute bottom-1 right-1 p-2 bg-primary text-white rounded-full shadow-md hover:bg-primary/90 transition-colors">
                                     <Edit3 size={16} />
-                                </button>
+                                </Link>
                             </div>
                             <div className="flex-1 pt-2 md:pt-0 mb-2">
                                  <h1 className="text-3xl font-bold text-gray-900">{user.name}</h1>
@@ -53,38 +53,57 @@ const ProfilePage = () => {
                                  </p>
                             </div>
                             <div className="flex gap-3 mb-2 w-full md:w-auto">
-                                <button className="flex-1 md:flex-none px-6 py-2.5 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition-colors">
+                                <Link to="/profile/edit" className="flex-1 md:flex-none px-6 py-2.5 bg-slate-100 text-back font-bold rounded-xl hover:bg-slate-200 transition-colors text-center block">
                                     {t({en: 'Edit Profile', hi: 'संपादित करें'})}
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="mb-8 p-4 bg-slate-900 rounded-2xl text-white flex items-center justify-between">
+                <div className="mb-8 p-6 bg-slate-900 rounded-2xl text-white flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
                     <div>
-                        <h3 className="font-bold text-lg">Admin Access (Demo)</h3>
+                        <h3 className="font-bold text-xl mb-1">Admin Access (Demo)</h3>
                         <p className="text-gray-400 text-sm">Manage users, partners, and orders</p>
                     </div>
-                    <div className="flex gap-2">
-                        <Link to="/admin" className="px-4 py-2 bg-white text-slate-900 font-bold rounded-lg hover:bg-gray-100 transition-colors">
+                    <div className="flex flex-wrap gap-3 w-full lg:w-auto">
+                        <Link to="/admin" className="px-4 py-2.5 bg-white text-slate-900 font-bold rounded-xl hover:bg-gray-100 transition-colors flex-1 text-center lg:flex-none">
                             Dashboard
                         </Link>
-                        <Link to="/partner" className="px-4 py-2 bg-indigo-500 text-white font-bold rounded-lg hover:bg-indigo-600 transition-colors shadow-lg shadow-indigo-500/30">
+                        <Link to="/partner" className="px-4 py-2.5 bg-indigo-500 text-white font-bold rounded-xl hover:bg-indigo-600 transition-colors shadow-lg shadow-indigo-500/30 flex-1 text-center lg:flex-none">
                             Partner View
                         </Link>
-                        <Link to="/admin/members" className="px-4 py-2 bg-slate-800 text-white font-bold rounded-lg hover:bg-slate-700 transition-colors">
+                        <Link to="/admin/members" className="px-4 py-2.5 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-700 transition-colors flex-1 text-center lg:flex-none">
                             Partners
                         </Link>
-                         <Link to="/admin/customers" className="px-4 py-2 bg-slate-800 text-white font-bold rounded-lg hover:bg-slate-700 transition-colors">
+                         <Link to="/admin/customers" className="px-4 py-2.5 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-700 transition-colors flex-1 text-center lg:flex-none">
                             Customers
                         </Link>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8">
+                <div className="md:hidden mb-6 overflow-x-auto pb-4 scrollbar-hide -mx-4 px-4">
+                    <div className="flex gap-3 min-w-max">
+                        {tabs.map((tab) => (
+                             <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id)}
+                                className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-sm transition-all whitespace-nowrap shadow-sm border ${
+                                    activeTab === tab.id
+                                        ? 'bg-primary text-white border-primary shadow-primary/30'
+                                        : 'bg-white border-slate-200 text-slate-600'
+                                }`}
+                            >
+                                <tab.icon size={16} />
+                                {t(tab.label)}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-0 md:gap-8">
                     {/* Sidebar Navigation */}
-                    <div className="space-y-6">
+                    <div className="hidden md:block space-y-6">
                         <nav className="bg-white rounded-2xl border border-slate-200 shadow-sm p-3">
                             {tabs.map((tab) => (
                                 <button
