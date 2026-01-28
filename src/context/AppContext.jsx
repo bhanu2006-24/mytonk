@@ -1,11 +1,14 @@
 import React, { createContext, useContext, useState } from 'react';
 import { initialServices, initialProducts, initialEvents, initialTransport } from '../data/mockData';
 
+import { useToast } from './ToastContext';
+
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [language, setLanguage] = useState('en'); // 'en' or 'hi'
   const [searchQuery, setSearchQuery] = useState('');
+  const { addToast } = useToast();
   
   // Data states
   const [services, setServices] = useState(initialServices);
@@ -25,6 +28,15 @@ export const AppProvider = ({ children }) => {
 
   const addToCart = (item, type = 'product') => {
     setCart(prev => [...prev, { ...item, type, cartId: Date.now() }]);
+    const name = t(item.name); // Using helper here might be tricky cause t is defined later.
+    // Let's just use the current language directly or pass raw obj
+    const itemName = item.name[language] || item.name.en || 'Item';
+    
+    if (type === 'service') {
+         addToast(`${itemName} added to requests!`, 'success');
+    } else {
+         addToast(`${itemName} added to cart!`, 'success');
+    }
   };
 
   const removeFromCart = (cartId) => {
