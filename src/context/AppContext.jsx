@@ -22,13 +22,16 @@ export const AppProvider = ({ children }) => {
   // Admin State (Mock)
   const [isAdmin, setIsAdmin] = useState(false);
 
+  // Orders
+  const [orders, setOrders] = useState([]);
+
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'en' ? 'hi' : 'en');
   };
 
   const addToCart = (item, type = 'product') => {
     setCart(prev => [...prev, { ...item, type, cartId: Date.now() }]);
-    const name = t(item.name); // Using helper here might be tricky cause t is defined later.
+    const name = t(item.name); 
     // Let's just use the current language directly or pass raw obj
     const itemName = item.name[language] || item.name.en || 'Item';
     
@@ -42,6 +45,20 @@ export const AppProvider = ({ children }) => {
   const removeFromCart = (cartId) => {
     setCart(prev => prev.filter(item => item.cartId !== cartId));
   };
+  
+  const placeOrder = () => {
+      if (cart.length === 0) return;
+      const newOrder = {
+          id: Date.now().toString(),
+          date: new Date().toLocaleDateString(),
+          items: [...cart],
+          total: cart.reduce((sum, item) => sum + item.price, 0),
+          status: 'Pending'
+      };
+      setOrders(prev => [newOrder, ...prev]);
+      setCart([]);
+      addToast('Order placed successfully!', 'success');
+  }
 
   const addService = (service) => {
     setServices(prev => [...prev, { ...service, id: Date.now().toString() }]);
@@ -78,6 +95,8 @@ export const AppProvider = ({ children }) => {
       cart,
       addToCart,
       removeFromCart,
+      orders,
+      placeOrder,
       isAdmin,
       setIsAdmin,
       t

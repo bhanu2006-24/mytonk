@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Trash2, ShoppingBag } from 'lucide-react';
 
 const CartPage = () => {
-    const { cart, removeFromCart, t } = useApp();
+    const { cart, removeFromCart, placeOrder, t } = useApp();
 
     const total = cart.reduce((sum, item) => sum + item.price, 0);
 
@@ -77,7 +77,14 @@ const CartPage = () => {
                                     <span>₹{total + Math.round(total * 0.05)}</span>
                                 </div>
                             </div>
-                            <button className="w-full py-3 bg-linear-to-r from-primary to-secondary rounded-xl font-bold text-white shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all">
+                            <button 
+                                onClick={() => {
+                                    if(confirm(t({en: 'Confirm order placement?', hi: 'आर्डर की पुष्टि करें?'}))) {
+                                        placeOrder();
+                                    }
+                                }}
+                                className="w-full py-3 bg-linear-to-r from-primary to-secondary rounded-xl font-bold text-white shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all"
+                            >
                                 {t({en: 'Checkout', hi: 'चेक आउट'})}
                             </button>
                         </motion.div>
