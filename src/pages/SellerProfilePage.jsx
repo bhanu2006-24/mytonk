@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 
 const SellerProfilePage = () => {
-    const { t } = useApp();
+    const { t, logout } = useApp();
     const [activeTab, setActiveTab] = useState('overview');
 
     const sellerInfo = {
@@ -177,7 +177,10 @@ const SellerProfilePage = () => {
                                 ))}
                             </ul>
                             <div className="mt-6 pt-4 border-t border-slate-100">
-                                <button className="flex items-center gap-2 text-red-600 font-bold text-sm hover:underline">
+                                <button 
+                                    onClick={() => logout()}
+                                    className="flex items-center gap-2 text-red-600 font-bold text-sm hover:underline"
+                                >
                                     Log Out
                                 </button>
                             </div>

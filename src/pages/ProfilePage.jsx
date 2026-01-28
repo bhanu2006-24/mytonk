@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { User, Mail, Phone, MapPin, Edit3, Settings, LogOut, Package, Heart, ChevronRight, Bell, Shield, CreditCard, HelpCircle } from 'lucide-react';
 
 const ProfilePage = () => {
-    const { t, orders } = useApp();
+    const { t, orders, logout } = useApp();
     const [activeTab, setActiveTab] = useState('profile');
 
     // Mock User Data
@@ -258,7 +258,10 @@ const ProfilePage = () => {
                                          ))}
                                          
                                          <div className="pt-8 mt-8 border-t border-slate-100">
-                                              <button className="flex items-center gap-2 text-red-500 font-bold hover:bg-red-50 px-4 py-2 rounded-lg transition-colors">
+                                              <button 
+                                                  onClick={() => logout()}
+                                                  className="flex items-center gap-2 text-red-500 font-bold hover:bg-red-50 px-4 py-2 rounded-lg transition-colors"
+                                              >
                                                   <LogOut size={20} />
                                                   <span>{t({en: 'Log Out', hi: 'लॉग आउट'})}</span>
                                               </button>
