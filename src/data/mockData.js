@@ -7,7 +7,7 @@ export const initialServices = [
     price: 499,
     rating: 4.8,
     reviews: 124,
-    image: 'https://images.unsplash.com/photo-1581578731117-104f2a41272c?q=80&w=800&auto=format&fit=crop',
+    image: 'https://plus.unsplash.com/premium_photo-1678742388597-d9d76a759d14?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     provider: 'Tonk Cleaners',
     contact: '+91 98765 43210'
   },
@@ -19,7 +19,7 @@ export const initialServices = [
     price: 299,
     rating: 4.5,
     reviews: 89,
-    image: 'https://images.unsplash.com/photo-1621905476059-5f3460456d56?q=80&w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1700639637219-23f6603c5d2e?q=80&w=976&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     provider: 'Sharma Electric',
     contact: '+91 98765 43211'
   },
@@ -43,7 +43,7 @@ export const initialServices = [
     price: 599,
     rating: 4.7,
     reviews: 210,
-    image: 'https://plus.unsplash.com/premium_photo-1663040329864-88484920fc2d?q=80&w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1665826254141-bfa10685e002?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     provider: 'Cool Breeze Services',
     contact: '+91 98765 43213'
   },
@@ -55,7 +55,7 @@ export const initialServices = [
     price: 450,
     rating: 4.4,
     reviews: 42,
-    image: 'https://images.unsplash.com/photo-1610513320995-1ad4bbf25e55?q=80&w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1611021061285-16c871740efa?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     provider: 'Vishwakarma Furniture',
     contact: '+91 98765 43214'
   },
@@ -93,7 +93,7 @@ export const initialProducts = [
     price: 350,
     unit: 'basket',
     rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1540933655380-5da057caa8aa?q=80&w=800&auto=format&fit=crop',
+    image: 'https://plus.unsplash.com/premium_photo-1675798983878-604c09f6d154?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     seller: 'Green Farm'
   },
   {

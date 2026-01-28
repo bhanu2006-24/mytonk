@@ -14,9 +14,9 @@ const Footer = () => {
                     <div>
                         <Link to="/" className="flex items-center gap-2 mb-6">
                              <div className="w-10 h-10 rounded-xl bg-linear-to-br from-primary to-secondary flex items-center justify-center text-xl font-bold text-white">
-                                MT
+                                TW
                             </div>
-                            <span className="text-2xl font-display font-bold text-white">MeraTonk</span>
+                            <span className="text-2xl font-display font-bold text-white">Tonk Wale</span>
                         </Link>
                         <p className="text-gray-400 mb-6 leading-relaxed">
                             {t({
@@ -76,7 +76,7 @@ const Footer = () => {
                 </div>
 
                 <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between text-gray-500 text-sm">
-                    <p>&copy; 2025 MeraTonk. All rights reserved.</p>
+                    <p>&copy; 2025 Tonk Wale. All rights reserved.</p>
                     <p>{t({en: 'Made with ❤️ for Tonk', hi: 'टोंक के लिए ❤️ के साथ बनाया गया'})}</p>
                 </div>
             </div>

@@ -31,7 +31,7 @@ const HomePage = () => {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.5 + index * 0.1 }}
-                    className={`min-w-[280px] md:min-w-[320px] p-6 rounded-2xl bg-linear-to-r ${offer.color} text-white shadow-lg snap-start flex items-center justify-between cursor-pointer hover:scale-105 transition-transform`}
+                    className={`min-w-[280px] md:min-w-[320px] p-6 rounded-2xl bg-gradient-to-r ${offer.color} text-white shadow-lg snap-start flex items-center justify-between cursor-pointer hover:scale-105 transition-transform`}
                 >
                     <div>
                         <div className="bg-white/20 w-fit px-2 py-1 rounded text-xs font-bold mb-2 flex items-center gap-1">
@@ -94,7 +94,7 @@ const HomePage = () => {
       </section>
 
       {/* Local Market */}
-      <section className="py-16 bg-linear-to-b from-orange-50 to-white border-y border-orange-100/50">
+      <section className="py-16 bg-gradient-to-b from-orange-50 to-white border-y border-orange-100/50">
         <div className="container-padding">
             <div className="flex items-end justify-between mb-8">
                 <div>
@@ -149,7 +149,7 @@ const HomePage = () => {
             
             <h2 className="text-3xl md:text-4xl font-bold mb-6 font-display relative z-10">{t({en: 'Are you a local business?', hi: 'क्या आप एक स्थानीय व्यवसाय हैं?'})}</h2>
             <p className="text-lg text-blue-100 mb-8 max-w-2xl mx-auto relative z-10 leading-relaxed font-medium">
-                {t({en: 'Join MeraTonk and reach thousands of customers in your city. Grow your business with us.', hi: 'मेराटोंक से जुड़ें और अपने शहर के हजारों ग्राहकों तक पहुंचें। हमारे साथ अपना व्यवसाय बढ़ाएं।'})}
+                {t({en: 'Join Tonk Wale and reach thousands of customers in your city. Grow your business with us.', hi: 'टोंक वाले से जुड़ें और अपने शहर के हजारों ग्राहकों तक पहुंचें। हमारे साथ अपना व्यवसाय बढ़ाएं।'})}
             </p>
             <button className="px-8 py-4 bg-white text-primary font-bold rounded-xl hover:bg-blue-50 transition-colors shadow-lg relative z-10">
                 {t({en: 'Register as Partner', hi: 'पार्टनर के रूप में रजिस्टर करें'})}

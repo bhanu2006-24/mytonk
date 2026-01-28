@@ -9,6 +9,10 @@ import EventsPage from './pages/EventsPage';
 import CartPage from './pages/CartPage';
 import TransportPage from './pages/TransportPage';
 import Footer from './components/Footer';
+import SupportPage from './pages/SupportPage';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminMembers from './pages/admin/AdminMembers';
+import AdminCustomers from './pages/admin/AdminCustomers';
 
 import ServiceDetails from './pages/ServiceDetails';
 import ProductDetails from './pages/ProductDetails';
@@ -31,6 +35,11 @@ function App() {
               <Route path="/transport" element={<TransportPage />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/support" element={<SupportPage />} />
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/members" element={<AdminMembers />} />
+              <Route path="/admin/customers" element={<AdminCustomers />} />
             </Routes>
             <Footer />
           </div>

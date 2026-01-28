@@ -61,6 +61,24 @@ const ProfilePage = () => {
                     </div>
                 </div>
 
+                <div className="mb-8 p-4 bg-slate-900 rounded-2xl text-white flex items-center justify-between">
+                    <div>
+                        <h3 className="font-bold text-lg">Admin Access (Demo)</h3>
+                        <p className="text-gray-400 text-sm">Manage users, partners, and orders</p>
+                    </div>
+                    <div className="flex gap-2">
+                        <Link to="/admin" className="px-4 py-2 bg-white text-slate-900 font-bold rounded-lg hover:bg-gray-100 transition-colors">
+                            Dashboard
+                        </Link>
+                        <Link to="/admin/members" className="px-4 py-2 bg-slate-800 text-white font-bold rounded-lg hover:bg-slate-700 transition-colors">
+                            Partners
+                        </Link>
+                         <Link to="/admin/customers" className="px-4 py-2 bg-slate-800 text-white font-bold rounded-lg hover:bg-slate-700 transition-colors">
+                            Customers
+                        </Link>
+                    </div>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8">
                     {/* Sidebar Navigation */}
                     <div className="space-y-6">

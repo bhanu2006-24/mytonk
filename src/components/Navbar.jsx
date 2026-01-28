@@ -15,11 +15,11 @@ const Navbar = () => {
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-2 shrink-0 group">
                     <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-xl font-bold text-white shadow-lg shadow-primary/30">
-                        MT
+                        TW
                     </div>
                     <div>
                         <span className="block text-xl font-display font-black text-primary leading-none">
-                            MERA TONK
+                            TONK WALE
                         </span>
                         <span className="text-[10px] font-bold text-gray-500 tracking-wider uppercase">
                             Your City App
