@@ -25,6 +25,9 @@ import EventDetails from './pages/EventDetails';
 import TransportDetails from './pages/TransportDetails';
 import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import SellerRegistrationPage from './pages/SellerRegistrationPage';
 import { ToastProvider } from './context/ToastContext';
 
 function App() {
@@ -58,6 +61,9 @@ function App() {
               <Route path="/admin/customers" element={<AdminCustomers />} />
               
               <Route path="/partner" element={<SellerProfilePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/register-seller" element={<SellerRegistrationPage />} />
             </Routes>
             <Footer />
           </div>
