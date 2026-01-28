@@ -160,7 +160,7 @@ export const initialTransport = [
     description: { en: 'Quick and affordable rides within Tonk city.', hi: 'टोंक शहर के भीतर त्वरित और किफायती सवारी।' },
     price: 'From ₹20',
     contact: '+91 99999 11111',
-    image: 'https://images.unsplash.com/photo-1596423733232-a96e1a7b0788?q=80&w=800&auto=format&fit=crop'
+    image: 'https://media.istockphoto.com/id/1140956329/photo/traditional-indian-moto-rickshaw-taxi-on-one.jpg?s=612x612&w=0&k=20&c=UOL0V9nOJxIa4qLsPeU14KCAFa8PDWvq-80XGJ0SKIg='
   },
   {
     id: 't2',

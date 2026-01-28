@@ -48,10 +48,10 @@ const Footer = () => {
                     <div>
                         <h3 className="text-white font-bold mb-6">{t({en: 'Support', hi: 'समर्थन'})}</h3>
                         <ul className="space-y-4 text-gray-400">
-                            <li><Link to="#" className="hover:text-primary transition-colors">{t({en: 'About Us', hi: 'हमारे बारे में'})}</Link></li>
-                            <li><Link to="#" className="hover:text-primary transition-colors">{t({en: 'Contact', hi: 'संपर्क करें'})}</Link></li>
-                            <li><Link to="#" className="hover:text-primary transition-colors">{t({en: 'Privacy Policy', hi: 'गोपनीयता नीति'})}</Link></li>
-                            <li><Link to="#" className="hover:text-primary transition-colors">{t({en: 'Terms of Service', hi: 'सेवा की शर्तें'})}</Link></li>
+                            <li><Link to="/about" className="hover:text-primary transition-colors">{t({en: 'About Us', hi: 'हमारे बारे में'})}</Link></li>
+                            <li><Link to="/support" className="hover:text-primary transition-colors">{t({en: 'Contact', hi: 'संपर्क करें'})}</Link></li>
+                            <li><Link to="/privacy" className="hover:text-primary transition-colors">{t({en: 'Privacy Policy', hi: 'गोपनीयता नीति'})}</Link></li>
+                            <li><Link to="/terms" className="hover:text-primary transition-colors">{t({en: 'Terms of Service', hi: 'सेवा की शर्तें'})}</Link></li>
                         </ul>
                     </div>
 

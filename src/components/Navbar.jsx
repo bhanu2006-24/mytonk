@@ -66,13 +66,26 @@ const Navbar = () => {
                     </Link>
                 </div>
 
-                {/* Mobile Menu Toggle */}
-                <button 
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    className="md:hidden p-2 rounded-lg bg-slate-50 text-gray-700 hover:bg-slate-100"
-                >
-                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
+                {/* Mobile Actions (Visible on small screens) */}
+                <div className="flex md:hidden items-center gap-2">
+                     <button 
+                        onClick={toggleLanguage}
+                        className="w-9 h-9 flex items-center justify-center rounded-full bg-slate-50 text-gray-700 font-bold text-xs border border-slate-200"
+                    >
+                        {language === 'en' ? 'HI' : 'EN'}
+                    </button>
+
+                    <Link to="/profile" className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-primary border border-slate-200">
+                        <User size={18} />
+                    </Link>
+
+                    <button 
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="p-2 rounded-lg text-gray-700 ml-1"
+                    >
+                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                </div>
             </div>
 
             {/* Mobile Menu */}
