@@ -17,6 +17,7 @@ import TermsOfService from './pages/TermsOfService';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminMembers from './pages/admin/AdminMembers';
 import AdminCustomers from './pages/admin/AdminCustomers';
+import SellerProfilePage from './pages/SellerProfilePage';
 
 import ServiceDetails from './pages/ServiceDetails';
 import ProductDetails from './pages/ProductDetails';
@@ -49,6 +50,8 @@ function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/members" element={<AdminMembers />} />
               <Route path="/admin/customers" element={<AdminCustomers />} />
+              
+              <Route path="/partner" element={<SellerProfilePage />} />
             </Routes>
             <Footer />
           </div>

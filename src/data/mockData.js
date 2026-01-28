@@ -139,7 +139,7 @@ export const initialEvents = [
     time: '6:00 PM',
     location: 'Gandhi Park, Tonk',
     description: { en: 'Enjoy the best local cuisines and music.', hi: 'स्थानीय व्यंजनों और संगीत का आनंद लें।' },
-    image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800&auto=format&fit=crop'
+    image: 'https://media.istockphoto.com/id/964079404/photo/dussehra-fair-india.jpg?s=612x612&w=0&k=20&c=thkjpjvFm2IZHE0qU9cBEizUyjdEi71y7_GFHozlEoQ='
   },
   {
     id: 'e2',
@@ -148,7 +148,7 @@ export const initialEvents = [
     time: '7:00 PM',
     location: 'Town Hall',
     description: { en: 'Folk dance and music performances.', hi: 'लोक नृत्य और संगीत प्रदर्शन।' },
-    image: 'https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=800&auto=format&fit=crop'
+    image: 'https://media.istockphoto.com/id/1489350715/video/october-19th-2022-dehradun-uttarakhand-india-an-evening-shot-of-a-huge-public-gathering.avif?s=640x640&k=20&c=R-1y5HUQpybY8V1d7FpzZXrwLxSOLgWKhqQW3knwqRw='
   }
 ];
 

@@ -70,6 +70,9 @@ const ProfilePage = () => {
                         <Link to="/admin" className="px-4 py-2 bg-white text-slate-900 font-bold rounded-lg hover:bg-gray-100 transition-colors">
                             Dashboard
                         </Link>
+                        <Link to="/partner" className="px-4 py-2 bg-indigo-500 text-white font-bold rounded-lg hover:bg-indigo-600 transition-colors shadow-lg shadow-indigo-500/30">
+                            Partner View
+                        </Link>
                         <Link to="/admin/members" className="px-4 py-2 bg-slate-800 text-white font-bold rounded-lg hover:bg-slate-700 transition-colors">
                             Partners
                         </Link>
