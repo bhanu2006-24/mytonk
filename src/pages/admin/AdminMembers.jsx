@@ -64,7 +64,7 @@ const AdminMembers = () => {
                                     <tr key={member.id} className="group hover:bg-slate-50 transition-colors">
                                         <td className="p-6 border-b border-slate-100">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center text-blue-600 font-bold">
+                                                <div className="w-10 h-10 bg-linear-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center text-blue-600 font-bold">
                                                     {member.name.charAt(0)}
                                                 </div>
                                                 <div>

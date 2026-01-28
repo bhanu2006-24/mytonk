@@ -41,7 +41,7 @@ const TransportDetails = () => {
                         <ArrowLeft size={24} />
                     </button>
                 </div>
-                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-50 to-transparent"></div>
+                <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-slate-50 to-transparent"></div>
             </div>
 
             <div className="container-padding relative -mt-10 z-10">

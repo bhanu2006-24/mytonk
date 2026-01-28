@@ -24,7 +24,7 @@ const LoginPage = () => {
         <div className="min-h-screen bg-white flex flex-col md:flex-row">
             {/* Visual Side */}
             <div className="hidden md:flex flex-1 bg-slate-900 relative overflow-hidden items-center justify-center p-12 text-white">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/80 to-purple-800/80 z-10"></div>
+                <div className="absolute inset-0 bg-linear-to-br from-primary/80 to-purple-800/80 z-10"></div>
                 <img 
                     src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1000&auto=format&fit=crop" 
                     className="absolute inset-0 w-full h-full object-cover opacity-50"

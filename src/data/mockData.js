@@ -126,7 +126,7 @@ export const initialProducts = [
     price: 220,
     unit: '1kg',
     rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800&auto=format&fit=crop',
+    image: 'https://media.istockphoto.com/id/655027000/photo/tasty-namkeen-bikaneri-bhujiya.jpg?s=612x612&w=0&k=20&c=LGzleJtmeMbB-gvanRk44oXs4LzBPJB7CXdjfW9fEsQ=',
     seller: 'Rajasthan Sweets'
   }
 ];

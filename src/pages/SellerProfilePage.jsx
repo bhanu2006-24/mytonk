@@ -38,7 +38,7 @@ const SellerProfilePage = () => {
             <div className="container-padding max-w-5xl mx-auto">
                 {/* Header Profile Card */}
                 <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200 mb-8 flex flex-col md:flex-row items-center md:items-start gap-6">
-                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white text-3xl font-bold font-display shadow-lg shadow-indigo-200">
+                    <div className="w-24 h-24 rounded-2xl bg-linear-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white text-3xl font-bold font-display shadow-lg shadow-indigo-200">
                         {sellerInfo.name.charAt(0)}
                     </div>
                     <div className="flex-1 text-center md:text-left">

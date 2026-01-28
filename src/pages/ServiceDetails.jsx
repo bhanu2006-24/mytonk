@@ -86,7 +86,7 @@ const ServiceDetails = () => {
                                 <div className="space-y-6">
                                     {reviews.map(review => (
                                         <div key={review.id} className="flex gap-4">
-                                            <div className="w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold shrink-0">
+                                            <div className="w-10 h-10 bg-linear-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold shrink-0">
                                                 {review.user.charAt(0)}
                                             </div>
                                             <div className="flex-1">
