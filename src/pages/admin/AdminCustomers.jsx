@@ -2,16 +2,24 @@ import React, { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import { useApp } from '../../context/AppContext';
 import { Search, Filter, MoreVertical, Mail, Phone, MapPin } from 'lucide-react';
+import { Navigate } from 'react-router-dom';
 
 const AdminCustomers = () => {
-    const { t } = useApp();
+    const { t, users, user: currentUser, orders } = useApp();
+    const [searchTerm, setSearchTerm] = useState('');
 
-    const customers = [
-        { id: 'CUST-001', name: 'Rahul Sharma', email: 'rahul@example.com', phone: '+91 98765 43210', location: 'Civil Lines, Tonk', orders: 12, spent: '₹15,400' },
-        { id: 'CUST-002', name: 'Priya Verma', email: 'priya@example.com', phone: '+91 98765 12345', location: 'Subhash Bazar, Tonk', orders: 5, spent: '₹4,200' },
-        { id: 'CUST-003', name: 'Amit Singh', email: 'amit@example.com', phone: '+91 91234 56789', location: 'Gandhi Nagar, Tonk', orders: 8, spent: '₹8,900' },
-        { id: 'CUST-004', name: 'Sneha Gupta', email: 'sneha@example.com', phone: '+91 88997 76655', location: 'Housing Board, Tonk', orders: 3, spent: '₹2,500' },
-    ];
+    if (currentUser?.role !== 'admin') {
+        return <Navigate to="/login" replace />;
+    }
+
+    const customers = users.filter(u => u.role === 'customer')
+         .filter(u => u.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    const getCustomerStats = (userId) => {
+        const userOrders = orders.filter(o => o.userId === userId);
+        const spent = userOrders.reduce((sum, o) => sum + o.total, 0);
+        return { count: userOrders.length, spent };
+    };
 
     return (
         <div className="min-h-screen bg-slate-50 pt-24 pb-12">
@@ -34,7 +42,9 @@ const AdminCustomers = () => {
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                             <input 
                                 type="text" 
-                                placeholder="Search customers..." 
+                                placeholder="Search customers..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
                                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-primary transition-colors"
                             />
                         </div>
@@ -54,7 +64,9 @@ const AdminCustomers = () => {
                                 </tr>
                             </thead>
                             <tbody className="text-sm">
-                                {customers.map((cust) => (
+                                {customers.length > 0 ? customers.map((cust) => {
+                                    const stats = getCustomerStats(cust.id);
+                                    return (
                                     <tr key={cust.id} className="group hover:bg-slate-50 transition-colors">
                                         <td className="p-6 border-b border-slate-100">
                                             <div className="flex items-center gap-4">
@@ -63,7 +75,7 @@ const AdminCustomers = () => {
                                                 </div>
                                                 <div>
                                                     <p className="font-bold text-slate-900 text-base">{cust.name}</p>
-                                                    <p className="text-xs text-slate-500">{cust.id}</p>
+                                                    <p className="text-xs text-slate-500">{cust.id.slice(-6)}</p>
                                                 </div>
                                             </div>
                                         </td>
@@ -73,21 +85,21 @@ const AdminCustomers = () => {
                                                     <Mail size={14} /> {cust.email}
                                                 </div>
                                                 <div className="flex items-center gap-2 text-slate-600 text-xs">
-                                                    <Phone size={14} /> {cust.phone}
+                                                    <Phone size={14} /> {cust.phone || 'N/A'}
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="p-6 border-b border-slate-100 text-slate-600">
                                              <div className="flex items-center gap-2 text-xs font-medium">
                                                 <MapPin size={14} className="text-slate-400" />
-                                                {cust.location}
+                                                {cust.location || 'Tonk'}
                                              </div>
                                         </td>
                                         <td className="p-6 border-b border-slate-100 font-bold text-slate-900">
-                                            {cust.orders}
+                                            {stats.count}
                                         </td>
                                         <td className="p-6 border-b border-slate-100 font-bold text-green-600">
-                                            {cust.spent}
+                                            ₹{stats.spent}
                                         </td>
                                         <td className="p-6 border-b border-slate-100 text-right">
                                             <button className="p-2 hover:bg-slate-200 rounded-lg text-slate-400 hover:text-slate-600 transition-colors">
@@ -95,7 +107,11 @@ const AdminCustomers = () => {
                                             </button>
                                         </td>
                                     </tr>
-                                ))}
+                                )}) : (
+                                    <tr>
+                                        <td colSpan="6" className="p-8 text-center text-slate-500">No customers found.</td>
+                                    </tr>
+                                )}
                             </tbody>
                         </table>
                     </div>

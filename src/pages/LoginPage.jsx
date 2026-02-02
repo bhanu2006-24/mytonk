@@ -15,9 +15,10 @@ const LoginPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Mock login - in real app, auth logic here
-        console.log('Login:', formData);
-        navigate('/profile');
+        const success = login(formData.email, formData.password);
+        if (success) {
+            navigate('/profile');
+        }
     };
 
     return (
