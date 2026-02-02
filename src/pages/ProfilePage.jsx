@@ -2,15 +2,22 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { useApp } from '../context/AppContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { User, Mail, Phone, MapPin, Edit3, Settings, LogOut, Package, Heart, ChevronRight, Bell, Shield, CreditCard, HelpCircle } from 'lucide-react';
 
 const ProfilePage = () => {
-    const { t, orders, logout, user } = useApp();
+    const { t, orders, logout, user, isLoading } = useApp();
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('profile');
 
-    // Default cleanup if user is null (shouldn't happen if guarded)
-    if (!user) return null; // or redirect
+    useEffect(() => {
+        if (!isLoading && !user) {
+            navigate('/login');
+        }
+    }, [user, isLoading, navigate]);
+
+    if (isLoading) return <div className="min-h-screen bg-white flex items-center justify-center">Loading...</div>;
+    if (!user) return null; // Safe fallback while redirecting
 
     const tabs = [
         { id: 'profile', label: { en: 'My Profile', hi: 'मेरी प्रोफ़ाइल' }, icon: User, color: 'text-blue-600 bg-blue-50' },

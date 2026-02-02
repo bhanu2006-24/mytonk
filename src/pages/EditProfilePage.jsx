@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { useApp } from '../context/AppContext';
 import { motion } from 'framer-motion';
@@ -6,8 +6,18 @@ import { ArrowLeft, Save, Camera, User, Phone, Mail, MapPin } from 'lucide-react
 import { Link, useNavigate } from 'react-router-dom';
 
 const EditProfilePage = () => {
-    const { t, user, updateUser } = useApp();
+    const { t, user, updateUser, isLoading } = useApp();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isLoading && !user) {
+            navigate('/login');
+        }
+    }, [user, isLoading, navigate]);
+
+    if (isLoading) return <div className="min-h-screen bg-white flex items-center justify-center">Loading...</div>;
+    // Guard against null user before rendering form state access
+    if (!user) return null;
 
     // Initialize with user data or defaults
     const [formData, setFormData] = useState({

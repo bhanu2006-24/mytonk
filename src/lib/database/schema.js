@@ -1,10 +1,10 @@
 import { neon } from './neon';
+import { initialServices, initialProducts, initialEvents, initialTransport } from '../../data/data';
 
 export const initializeSchema = async () => {
-    // This function creates tables if they don't exist.
-    // It is called by AppContext if it detects a "missing relation" error.
+    // This function creates tables if they don't exist and seeds them with initial data.
     
-    const queries = [
+    const tableQueries = [
         `CREATE TABLE IF NOT EXISTS users (
             id TEXT PRIMARY KEY,
             name TEXT NOT NULL,
@@ -81,10 +81,67 @@ export const initializeSchema = async () => {
 
     console.log("Initializing Schema...");
     try {
-        for (const query of queries) {
+        // 1. Create Tables
+        for (const query of tableQueries) {
              await neon.query(query);
         }
-        console.log("Schema Initialized Successfully");
+
+        // 2. Sync Data from File to DB (Upsert)
+        // This allows developers to edit src/data/data.js and have changes reflected in the DB
+        const syncTable = async (tableName, data) => {
+            console.log(`Syncing ${tableName}...`);
+            for (const item of data) {
+                // Construct dynamic upsert query
+                const keys = Object.keys(item);
+                const values = Object.values(item);
+                const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ');
+                
+                // Build SET clause for update (exclude id and created_at)
+                const updates = keys
+                    .filter(k => k !== 'id' && k !== 'created_at')
+                    .map((k) => `${k} = EXCLUDED.${k}`)
+                    .join(', ');
+
+                // We need to properly stringify JSON content for the DB driver if needed, 
+                // though neon.js helper usually does it. Let's rely on neon.js's query method 
+                // but we need to pass raw values.
+                
+                const query = `
+                    INSERT INTO ${tableName} (${keys.join(', ')})
+                    VALUES (${placeholders})
+                    ON CONFLICT (id) DO UPDATE SET
+                    ${updates};
+                `;
+                
+                // Formatting values for JSON columns
+                const formattedValues = values.map(v => (typeof v === 'object' && v !== null) ? JSON.stringify(v) : v);
+                
+                await neon.query(query, formattedValues);
+            }
+        };
+
+        await syncTable('services', initialServices);
+        await syncTable('products', initialProducts);
+        await syncTable('events', initialEvents);
+        await syncTable('transport', initialTransport);
+
+        // Optional: Seed a default Admin?
+        // Let's create one default admin so you aren't locked out.
+        // Email: admin@tonkwale.com, Pass: admin123
+        const admins = await neon.query(`SELECT * FROM users WHERE role = 'admin'`);
+        if (admins.length === 0) {
+             await neon.insert('users', {
+                 id: 'admin_001',
+                 name: 'Super Admin',
+                 email: 'admin@tonkwale.com',
+                 password: 'admin', 
+                 role: 'admin',
+                 phone: '0000000000',
+                 location: 'Tonk, Rajasthan'
+             });
+        }
+
+        console.log("Schema & Data Initialized Successfully");
         return true;
     } catch (error) {
         console.error("Schema Initialization Failed:", error);

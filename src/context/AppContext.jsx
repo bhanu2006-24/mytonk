@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { initialServices as defaultServices, initialProducts as defaultProducts, initialEvents as defaultEvents, initialTransport as defaultTransport } from '../data/mockData';
+import { initialServices as defaultServices, initialProducts as defaultProducts, initialEvents as defaultEvents, initialTransport as defaultTransport } from '../data/data';
 import { useToast } from './ToastContext';
 import { db } from '../lib/database';
 import { authService } from '../lib/auth';
-import { initializeSchema } from '../lib/database/schema'; // We'll create this
+import { initializeSchema } from '/src/lib/database/schema'; // Absolute import attempt
+// Re-trigger HMR check
 
 const AppContext = createContext();
 

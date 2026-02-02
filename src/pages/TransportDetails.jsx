@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { useParams, useNavigate } from 'react-router-dom';
-import { initialTransport } from '../data/mockData'; 
+import { initialTransport } from '/src/data/data'; // Absolute Path 
 import { useApp } from '../context/AppContext';
 import { motion } from 'framer-motion';
 import { Car, Phone, MapPin, ArrowLeft, Star, ShieldCheck, Clock } from 'lucide-react';

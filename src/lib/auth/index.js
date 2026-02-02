@@ -2,15 +2,7 @@ import { db } from '../database';
 
 export const authService = {
   login: (emailOrPhone, password, users) => {
-    // Legacy/Demo mode support
-    if (['customer', 'seller', 'admin'].includes(emailOrPhone)) {
-        const demoUser = users.find(u => u.role === emailOrPhone);
-        if (demoUser) {
-            return { success: true, user: demoUser, isDemo: true };
-        }
-        return { success: false, error: 'Demo user not found' };
-    }
-
+    // Real Auth Only: Check against the loaded users list
     const foundUser = users.find(u => (u.email === emailOrPhone || u.phone === emailOrPhone) && u.password === password);
     
     if (foundUser) {

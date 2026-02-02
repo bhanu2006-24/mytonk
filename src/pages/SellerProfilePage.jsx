@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { useApp } from '../context/AppContext';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { 
     Star, DollarSign, Calendar, Settings, 
     Plus, Package, Edit2, Clock, CheckCircle 
 } from 'lucide-react';
 
 const SellerProfilePage = () => {
-    const { t, logout } = useApp();
+    const { t, logout, user, isLoading } = useApp();
+    const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('overview');
+
+    useEffect(() => {
+        if (!isLoading && !user) {
+            navigate('/login');
+        }
+    }, [user, isLoading, navigate]);
+
+    if(isLoading) return <div className="min-h-screen bg-slate-50 pt-24 pb-12 text-center">Loading...</div>;
+    // If we want to strictly enforce seller role, we could check user.role here too
+    if(!user) return null;
 
     const sellerInfo = {
         name: "Sharma Electronics",

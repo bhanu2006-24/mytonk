@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { useParams, useNavigate } from 'react-router-dom';
-import { initialEvents } from '../data/mockData'; // Assuming this exists or I'll fallback
+import { initialEvents } from '/src/data/data'; // Absolute Path
 import { useApp } from '../context/AppContext';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, MapPin, Share2, Heart, ArrowLeft, Ticket } from 'lucide-react';
