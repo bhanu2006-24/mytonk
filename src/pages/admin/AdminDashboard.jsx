@@ -5,7 +5,7 @@ import { Users, Briefcase, ShoppingBag, BarChart2, Search, Filter, MoreVertical,
 import { motion } from 'framer-motion';
 
 const AdminDashboard = () => {
-    const { t, orders, user: currentUser, users } = useApp();
+    const { t, orders, user: currentUser, users, resetDatabase } = useApp();
     const [stats, setStats] = useState([
         { label: 'Total Users', value: '0', icon: Users, color: 'bg-blue-100 text-blue-600' },
         { label: 'Active Partners', value: '0', icon: Briefcase, color: 'bg-indigo-100 text-indigo-600' },
@@ -52,6 +52,7 @@ const AdminDashboard = () => {
                     </div>
                     <div className="flex gap-4">
                         <button className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-slate-600 font-bold shadow-sm">Export Data</button>
+                        <button onClick={() => resetDatabase()} className="px-4 py-2 bg-blue-600 text-white rounded-xl font-bold shadow-sm hover:bg-blue-700 transition-colors">Sync New Data</button>
                     </div>
                 </div>
 

@@ -230,6 +230,26 @@ export const AppProvider = ({ children }) => {
       logout,
       updateUser,
       t,
+      resetDatabase: async () => {
+          setIsLoading(true);
+          try {
+              await initializeSchema();
+              // Reload local state
+              const [s, p, e, tr] = await Promise.all([
+                  db.table('services').getAll(defaultServices),
+                  db.table('products').getAll(defaultProducts),
+                  db.table('events').getAll(defaultEvents),
+                  db.table('transport').getAll(defaultTransport)
+              ]);
+              setServices(s); setProducts(p); setEvents(e); setTransport(tr);
+              addToast('Database synced with new data!', 'success');
+          } catch (err) {
+              console.error(err);
+              addToast('Sync failed', 'error');
+          } finally {
+              setIsLoading(false);
+          }
+      },
       isLoading
     }}>
       {children}
