@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { initialServices as defaultServices, initialProducts as defaultProducts, initialEvents as defaultEvents, initialTransport as defaultTransport } from '../data/mockData';
 import { useToast } from './ToastContext';
-import { db, defaultUsers } from '../lib/db';
+import { db } from '../lib/database';
 import { authService } from '../lib/auth';
+import { initializeSchema } from '../lib/database/schema'; // We'll create this
 
 const AppContext = createContext();
 
@@ -12,15 +13,17 @@ export const AppProvider = ({ children }) => {
   // -- App State --
   const [language, setLanguage] = useState(() => db.get('language', 'en'));
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   
   // -- Data State (Persistent) --
-  const [services, setServices] = useState(() => db.services.getAll(defaultServices));
+  // We initialize with what we have in LS immediately (sync), then verify with Neon (async)
+  const [services, setServices] = useState(() => db.get('services', defaultServices));
   const [products, setProducts] = useState(() => db.get('products', defaultProducts));
   const [events, setEvents] = useState(() => db.get('events', defaultEvents));
   const [transport, setTransport] = useState(() => db.get('transport', defaultTransport));
   
   // -- User/Auth State (Persistent) --
-  const [users, setUsers] = useState(() => db.users.getAll());
+  const [users, setUsers] = useState(() => db.users.getAllSync());
   const [user, setUser] = useState(() => db.get('currentUser', null)); 
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -28,16 +31,57 @@ export const AppProvider = ({ children }) => {
   const [cart, setCart] = useState(() => db.get('cart', []));
   const [orders, setOrders] = useState(() => db.get('orders', []));
 
-  // -- Effects for Persistence --
-  useEffect(() => db.set('language', language), [language]);
-  useEffect(() => db.services.save(services), [services]);
-  useEffect(() => db.set('products', products), [products]);
-  useEffect(() => db.set('events', events), [events]);
-  useEffect(() => db.set('transport', transport), [transport]);
-  useEffect(() => db.users.save(users), [users]);
-  useEffect(() => db.set('currentUser', user), [user]);
-  useEffect(() => db.set('cart', cart), [cart]);
-  useEffect(() => db.set('orders', orders), [orders]);
+  // -- Load Data from Neon on Mount --
+  useEffect(() => {
+    const loadData = async () => {
+        try {
+            // Attempt to load data
+            const [remoteUsers, remoteServices, remoteProducts, remoteEvents, remoteTransport] = await Promise.all([
+                db.users.getAll(),
+                db.table('services').getAll(defaultServices),
+                db.table('products').getAll(defaultProducts),
+                db.table('events').getAll(defaultEvents),
+                db.table('transport').getAll(defaultTransport)
+            ]);
+
+            if (remoteUsers) setUsers(remoteUsers);
+            if (remoteServices) setServices(remoteServices);
+            if (remoteProducts) setProducts(remoteProducts);
+            if (remoteEvents) setEvents(remoteEvents);
+            if (remoteTransport) setTransport(remoteTransport);
+            
+        } catch (e) {
+            console.error("Failed to load remote data", e);
+             // Check for missing tables (Postgres error code 42P01 is undefined_table, but we might just catch the string)
+             if (e.message && e.message.includes('relation') && e.message.includes('does not exist')) {
+                 console.log("Tables missing. Attempting to auto-create schema...");
+                 try {
+                     await initializeSchema();
+                     addToast("Database initialized successfully!", "success");
+                     // Retry load? Maybe next reload.
+                 } catch (schemaErr) {
+                     console.error("Failed to auto-create schema", schemaErr);
+                 }
+             }
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    loadData();
+  }, []);
+
+
+  // -- Effects for Persistence (Sync to LS for offline) --
+  // Fix: Wrapped in braces to avoid returning Promises to useEffect
+  useEffect(() => { db.set('language', language); }, [language]);
+  useEffect(() => { db.table('services').save(services); }, [services]);
+  useEffect(() => { db.table('products').save(products); }, [products]);
+  useEffect(() => { db.table('events').save(events); }, [events]);
+  useEffect(() => { db.table('transport').save(transport); }, [transport]);
+  useEffect(() => { db.set('users', users); }, [users]); 
+  useEffect(() => { db.set('currentUser', user); }, [user]);
+  useEffect(() => { db.set('cart', cart); }, [cart]);
+  useEffect(() => { db.set('orders', orders); }, [orders]);
 
   // Sync isAdmin based on user role
   useEffect(() => {
@@ -64,8 +108,8 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  const register = (userData) => {
-    const result = authService.register(userData, users);
+  const register = async (userData) => {
+    const result = await authService.register(userData, users);
     
     if (result.success) {
         setUsers(result.allUsers); // Update local state
@@ -120,7 +164,7 @@ export const AppProvider = ({ children }) => {
     setCart(prev => prev.filter(item => item.cartId !== cartId));
   };
   
-  const placeOrder = () => {
+  const placeOrder = async (paymentDetails = null) => {
       if (cart.length === 0) return;
       
       const newOrder = {
@@ -128,22 +172,30 @@ export const AppProvider = ({ children }) => {
           date: new Date().toLocaleDateString(),
           items: [...cart],
           total: cart.reduce((sum, item) => sum + item.price, 0),
-          status: 'Pending',
+          status: paymentDetails ? 'Processing' : 'Pending',
+          payment: paymentDetails || { method: 'COD' },
           userId: user?.id || 'guest'
       };
       
+      await db.table('orders').add(newOrder);
+      
       setOrders(prev => [newOrder, ...prev]);
       setCart([]);
+      db.set('cart', []);
       addToast('Order placed successfully!', 'success');
   }
 
-  const addService = (service) => {
-    setServices(prev => [...prev, { ...service, id: Date.now().toString() }]);
+  const addService = async (service) => {
+    const newItem = { ...service, id: Date.now().toString() };
+    await db.table('services').add(newItem);
+    setServices(prev => [...prev, newItem]);
     addToast('Service added!', 'success');
   }
 
-  const addProduct = (product) => {
-    setProducts(prev => [...prev, { ...product, id: Date.now().toString() }]);
+  const addProduct = async (product) => {
+    const newItem = { ...product, id: Date.now().toString() };
+    await db.table('products').add(newItem);
+    setProducts(prev => [...prev, newItem]);
     addToast('Product added!', 'success');
   }
 
@@ -176,7 +228,8 @@ export const AppProvider = ({ children }) => {
       register,
       logout,
       updateUser,
-      t
+      t,
+      isLoading
     }}>
       {children}
     </AppContext.Provider>

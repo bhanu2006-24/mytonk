@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import { useApp } from '../context/AppContext';
 import { motion } from 'framer-motion';
 import { Trash2, ShoppingBag, MapPin } from 'lucide-react';
+import { initiatePayment } from '../lib/payments/razorpay';
 
 const CartPage = () => {
     const { cart, removeFromCart, placeOrder, t } = useApp();
@@ -81,13 +82,34 @@ const CartPage = () => {
                                 </div>
                                 <button 
                                     onClick={() => {
-                                        if(confirm(t({en: 'Confirm order placement?', hi: 'आर्डर की पुष्टि करें?'}))) {
-                                            placeOrder();
+                                        const handleCheckout = async () => {
+                                            const finalTotal = total + Math.round(total * 0.05);
+                                            
+                                            // 1. Payment Integration
+                                            await initiatePayment({
+                                                amount: finalTotal,
+                                                user: { name: 'User', email: 'user@example.com' }, // You can pass real user info here from context if available
+                                                onSuccess: (paymentRes) => {
+                                                    // 2. Place Order on Success
+                                                    placeOrder({
+                                                        method: 'Razorpay',
+                                                        id: paymentRes.razorpay_payment_id,
+                                                        orderId: paymentRes.razorpay_order_id
+                                                    });
+                                                },
+                                                onFailure: (error) => {
+                                                    alert('Payment Failed: ' + (error.description || 'Unknown error'));
+                                                }
+                                            });
+                                        };
+
+                                        if(confirm(t({en: 'Proceed to Payment?', hi: 'भुगतान के लिए आगे बढ़ें?'}))) {
+                                            handleCheckout();
                                         }
                                     }}
                                     className="w-full py-3 bg-linear-to-r from-primary to-secondary rounded-xl font-bold text-white shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all"
                                 >
-                                    {t({en: 'Checkout', hi: 'चेक आउट'})}
+                                    {t({en: 'Pay Now', hi: 'अभी भुगतान करें'})}
                                 </button>
                             </div>
 

@@ -1,4 +1,4 @@
-import { db } from './db';
+import { db } from '../database';
 
 export const authService = {
   login: (emailOrPhone, password, users) => {
@@ -22,7 +22,7 @@ export const authService = {
     return { success: false, error: 'Invalid credentials' };
   },
 
-  register: (userData, users) => {
+  register: async (userData, users) => {
       // Check if email already exists
       if (users.some(u => u.email === userData.email)) {
           return { success: false, error: 'Email already registered' };
@@ -34,11 +34,11 @@ export const authService = {
           ...userData
       };
       
+      // Save to DB (Neon + LS)
+      await db.users.create(newUser);
+      
+      // Update local array wrapper for immediate UI feedback
       const updatedUsers = [...users, newUser];
-      db.users.save(updatedUsers); // Persist immediately? Or let context handle it? 
-      // Better to let context handle state update, but for "auth service" it makes sense to handle persistence.
-      // However, AppContext has the "source of truth" in state. 
-      // To strictly separate, AppContext should subscribe to DB or calling setUsers should update DB.
       
       return { success: true, user: newUser, allUsers: updatedUsers };
   }
